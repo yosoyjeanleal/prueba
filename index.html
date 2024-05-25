@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Reproductor de Video</title>
+</head>
+
+<body>
+    <div class="reproductor">
+        <IFRAME SRC="https://swdyu.com/e/cq93xybtfn05" FRAMEBORDER=0 MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=NO WIDTH=640 HEIGHT=360 allowfullscreen></IFRAME>
+            <track src="sub/idontwannabeyouanymore_en.vtt" kind="subtitles" srclang="en" label="English" id="subIng" default>
+            <track src="sub/idontwannabeyouanymore.es.vtt" kind="subtitles" srclang="es" label="Español" id="subEsp">
+        </video>
+        <div class="info">
+            <p id="titulo">Billie Eilish - idontwannabeyouanymore</p>
+            <p id="categoria">Música</p>
+            <p id="descripcion">La joven estrella pop nativa de Los Angeles, Billie Eilish, regresa con una maravillosa y profundamente introspectiva presentación de "idontwannabeyouanymore", sacado de su EP Debut Dont Smile at Me.</p>
+        </div>
+    </div>
+
+    <div id="contenedorVideos" class="contenedor">
+
+    </div>
+
+    <script>
+        let videos = [{
+                nombre: 'Billie Eilish - idontwannabeyouanymore',
+                categoria: 'Música',
+                descripcion: 'La joven estrella pop nativa de Los Angeles, Billie Eilish, regresa con una maravillosa y profundamente introspectiva presentación de "idontwannabeyouanymore", sacado de su EP Debut Dont Smile at Me.',
+                src: 'videos/idontwannabeyouanymore.mp4',
+                subtitulos: {
+                    ingles: 'sub/idontwannabeyouanymore_en.vtt',
+                    espanol: 'sub/idontwannabeyouanymore.es.vtt'
+
+                }
+
+            },
+            {
+                nombre: 'Dennis Lloyd - Leftovers',
+                categoria: 'Música',
+                descripcion: 'El artista Dennis Lloyd, de Tel Aviv, toca "Leftovers", una canción que te enfrenta con errores, dolor y constantes manifestaciones de angustia.',
+                src: 'videos/leftovers.mp4',
+                subtitulos: {
+                    ingles: 'sub/leftovers.en.vtt',
+                    espanol: 'sub/leftovers.es.vtt'
+
+                }
+
+            },
+            {
+                nombre: 'Mahalia - Sober',
+                categoria: 'Música',
+                descripcion: 'La grandiosa cantante británica Mahalia impresiona con su sensual voz en su sensacionalmente suave throwback R&B y su single debut Sober.',
+                src: 'videos/sober.mp4',
+                subtitulos: {
+                    ingles: 'sub/sober.en.vtt',
+                    espanol: 'sub/sober.es.vtt'
+
+                }
+
+
+            },
+        ];
+        var videoActual = null;
+
+        function cargar() {
+
+            videoActual = videos[0];
+
+            for (let i = 0; i < videos.length; i++) {
+
+                let video = videos[i];
+                agregarvideo(video, i);
+            }
+            
+            console.log(video);
+        }
+
+        function agregarvideo(video) {
+
+            let texto = '<article class="estilo" ondblclick="cambiarVideo(' + videos.indexOf(video) + ')">';
+            texto += '<span class="tooltiptext">' + video.descripcion + '</span>';
+            texto += '<video width="150" height="150" src="' + video.src + '"> </video>';
+            texto += '<div class="infomini">'
+            texto += '<p class="nombre">' + video.nombre + '</p>';
+            texto += '<p class="categoria">' + video.categoria + '</p>';
+            texto += '</div>'
+            texto += '</article>';
+            document.getElementById('contenedorVideos').innerHTML += texto;
+        }
+
+
+        function cambiarVideo(idVideo) {
+            let nombre = document.getElementById('titulo');
+            let categoria = document.getElementById('categoria');
+            let descripcion = document.getElementById('descripcion');
+            let ing = document.getElementById('subIng');
+            let esp = document.getElementById('subEsp');
+            let video = videos[idVideo];
+            let etiquetaVideo = document.getElementById('video');
+            etiquetaVideo.setAttribute('src', video.src);
+            etiquetaVideo.play();
+            titulo.innerHTML = video.nombre;
+            categoria.innerHTML = video.categoria;
+            descripcion.innerHTML = video.descripcion;
+            subIng.src = video.subtitulos.ingles;
+            subEsp.src = video.subtitulos.espanol;
+            videoActual = video;
+
+
+        }
+
+        function siguienteVideo() {
+
+            let indiceActual = videos.indexOf(videoActual);
+            let numeroVideos = videos.length;
+            let idVideoNuevo;
+
+            if (indiceActual < numeroVideos - 1) {
+
+                idVideoNuevo = indiceActual + 1;
+
+            } else {
+
+                idVideoNuevo = 0;
+
+            }
+
+            cambiarVideo(idVideoNuevo);
+
+        }
+
+        window.onload = cargar();
+    </script>
+</body>
+</html>
